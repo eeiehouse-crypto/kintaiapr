@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import type { Employee, AttendanceLog } from './types';
 import { 
   getEmployees, 
@@ -12,29 +12,24 @@ import { AdminDashboard } from './components/AdminDashboard';
 import './App.css';
 
 function App() {
-  const [employees, setEmployees] = useState<Employee[]>([]);
-  const [attendanceLogs, setAttendanceLogs] = useState<AttendanceLog[]>([]);
-  const [screen, setScreen] = useState<'clock_in' | 'admin'>('clock_in');
-
-  // アプリ起動時のデータ読み込みと自動デモデータ初期シード
-  useEffect(() => {
-    const savedEmployees = getEmployees();
-    const savedLogs = getAttendanceLogs();
-
-    if (savedEmployees.length === 0) {
-      // データベースが完全に空の場合、初期体験を最高にするためにデモデータを自動シードする
+  const [employees, setEmployees] = useState<Employee[]>(() => {
+    const saved = getEmployees();
+    if (saved.length === 0) {
       saveEmployees(DEMO_EMPLOYEES);
+      return DEMO_EMPLOYEES;
+    }
+    return saved;
+  });
+  const [attendanceLogs, setAttendanceLogs] = useState<AttendanceLog[]>(() => {
+    const saved = getAttendanceLogs();
+    if (saved.length === 0) {
       const demoLogs = generateDemoAttendanceLogs();
       saveAttendanceLogs(demoLogs);
-
-      setEmployees(DEMO_EMPLOYEES);
-      setAttendanceLogs(demoLogs);
-      console.log('Seeded demo data on first load.');
-    } else {
-      setEmployees(savedEmployees);
-      setAttendanceLogs(savedLogs);
+      return demoLogs;
     }
-  }, []);
+    return saved;
+  });
+  const [screen, setScreen] = useState<'clock_in' | 'admin'>('clock_in');
 
   // 従業員データの更新と永続化
   const handleUpdateEmployees = (updatedEmployees: Employee[]) => {

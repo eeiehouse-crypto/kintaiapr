@@ -31,6 +31,18 @@ export const ClockInScreen: React.FC<ClockInScreenProps> = ({
     }
     return null;
   });
+
+  // 従業員データが後から更新・ロードされた場合の同期（二重の安全対策）
+  useEffect(() => {
+    const empId = params.get('employeeId');
+    if (empId && (!selectedEmployee || selectedEmployee.id !== empId)) {
+      const found = employees.find(emp => emp.id === empId && emp.isActive);
+      if (found) {
+        setSelectedEmployee(found);
+      }
+    }
+  }, [employees]);
+
   const [searchQuery, setSearchQuery] = useState('');
   const [currentTime, setCurrentTime] = useState(new Date());
   const [stampSuccess, setStampSuccess] = useState<{
