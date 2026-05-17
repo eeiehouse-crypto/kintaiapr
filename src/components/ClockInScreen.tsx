@@ -18,8 +18,19 @@ export const ClockInScreen: React.FC<ClockInScreenProps> = ({
   onUpdateLog,
   onNavigateToAdmin,
 }) => {
+  // 個人専用URLモードの判定
+  const params = new URLSearchParams(window.location.search);
+  const isPersonalMode = params.has('employeeId');
+
   // 状態管理
-  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(() => {
+    const empId = params.get('employeeId');
+    if (empId) {
+      const found = employees.find(emp => emp.id === empId && emp.isActive);
+      return found || null;
+    }
+    return null;
+  });
   const [searchQuery, setSearchQuery] = useState('');
   const [currentTime, setCurrentTime] = useState(new Date());
   const [stampSuccess, setStampSuccess] = useState<{
@@ -167,12 +178,53 @@ export const ClockInScreen: React.FC<ClockInScreenProps> = ({
       time: timeStr,
     });
 
-    // 3秒後に非表示、かつ選択解除
+    // 3秒後に非表示、かつ一般モードなら選択解除
     setTimeout(() => {
       setStampSuccess(null);
-      setSelectedEmployee(null);
+      if (!isPersonalMode) {
+        setSelectedEmployee(null);
+      }
     }, 3000);
   };
+
+  if (isPersonalMode && !selectedEmployee) {
+    return (
+      <div style={{ padding: '6rem 1.5rem', maxWidth: '500px', margin: '0 auto', textAlign: 'center' }}>
+        <div className="glass-card float-animation" style={{
+          background: 'white',
+          borderRadius: 'var(--radius-lg)',
+          padding: '3rem',
+          boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
+          border: '2px solid #EF4444',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '1.25rem'
+        }}>
+          <div style={{
+            width: '72px',
+            height: '72px',
+            borderRadius: '50%',
+            background: 'rgba(239, 68, 68, 0.08)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#EF4444'
+          }}>
+            <Lock size={36} />
+          </div>
+          <h2 style={{ fontSize: '1.6rem', fontWeight: 900, color: 'var(--wood-dark)' }}>従業員データが見つかりません</h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.6' }}>
+            アクセスしたURLの形式が正しくないか、退職等により従業員データが削除または無効化された可能性があります。<br />
+            管理者に正しい【専用打刻URL】の発行を依頼してください。
+          </p>
+          <button onClick={() => window.location.href = window.location.origin} className="btn btn-outline" style={{ marginTop: '0.5rem', width: '100%' }}>
+            全体の打刻画面に戻る
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ padding: '2rem 1.5rem', maxWidth: '1200px', margin: '0 auto' }}>
@@ -245,11 +297,13 @@ export const ClockInScreen: React.FC<ClockInScreenProps> = ({
       </div>
 
       <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+        display: isPersonalMode ? 'flex' : 'grid',
+        justifyContent: isPersonalMode ? 'center' : 'stretch',
+        gridTemplateColumns: isPersonalMode ? undefined : 'repeat(auto-fit, minmax(320px, 1fr))',
         gap: '2rem'
       }}>
-        {/* 左側：従業員選択リスト */}
+        {/* 左側：従業員選択リスト（個人モードでは非表示） */}
+        {!isPersonalMode && (
         <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', height: '600px' }}>
           <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <span>①</span> 従業員を選択してください
@@ -362,6 +416,7 @@ export const ClockInScreen: React.FC<ClockInScreenProps> = ({
             )}
           </div>
         </div>
+        )}
 
         {/* 右側：打刻操作パネル */}
         <div className="glass-card" style={{
@@ -370,6 +425,8 @@ export const ClockInScreen: React.FC<ClockInScreenProps> = ({
           justifyContent: 'center',
           alignItems: 'stretch',
           height: '600px',
+          width: isPersonalMode ? '100%' : 'auto',
+          maxWidth: isPersonalMode ? '500px' : 'none',
           background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(250, 247, 242, 0.75) 100%)'
         }}>
           {selectedEmployee ? (
@@ -511,14 +568,16 @@ export const ClockInScreen: React.FC<ClockInScreenProps> = ({
                 </button>
               </div>
 
-              {/* 選択解除 */}
-              <button
-                onClick={() => setSelectedEmployee(null)}
-                className="btn btn-outline"
-                style={{ width: '100%', borderColor: 'transparent', color: 'var(--text-muted)' }}
-              >
-                キャンセル
-              </button>
+              {/* 選択解除（一般モードのみ） */}
+              {!isPersonalMode && (
+                <button
+                  onClick={() => setSelectedEmployee(null)}
+                  className="btn btn-outline"
+                  style={{ width: '100%', borderColor: 'transparent', color: 'var(--text-muted)' }}
+                >
+                  キャンセル
+                </button>
+              )}
             </div>
           ) : (
             <div style={{
@@ -604,6 +663,27 @@ export const ClockInScreen: React.FC<ClockInScreenProps> = ({
               </p>
             </div>
           </div>
+        </div>
+      )}
+
+      {isPersonalMode && (
+        <div className="glass-card float-animation" style={{
+          background: 'rgba(255, 255, 255, 0.8)',
+          border: '1px dashed var(--wood-medium)',
+          borderRadius: 'var(--radius-md)',
+          padding: '1.25rem',
+          marginTop: '2.5rem',
+          maxWidth: '500px',
+          margin: '2rem auto 0 auto',
+          textAlign: 'center',
+          boxShadow: '0 8px 32px rgba(140, 106, 92, 0.05)',
+        }}>
+          <p style={{ fontSize: '0.85rem', color: 'var(--wood-dark)', fontWeight: 'bold', margin: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
+            <span>💡</span> スマホの「ホーム画面に追加」をしておくと便利！
+          </p>
+          <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.5rem', lineHeight: '1.5', margin: '0.5rem 0 0 0' }}>
+            このページをSafariなら「ホーム画面に追加」、Chromeなら「ホーム画面に追加（またはアプリのインストール）」をしておくと、次回から名前を選ぶ手間なく、アプリアイコンから1秒で打刻画面を開けます。
+          </p>
         </div>
       )}
 

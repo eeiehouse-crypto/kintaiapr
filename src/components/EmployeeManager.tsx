@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Edit3, Trash2, Save, X, DollarSign, Clock, Calendar } from 'lucide-react';
+import { Plus, Edit3, Trash2, Save, X, DollarSign, Clock, Calendar, Link } from 'lucide-react';
 import type { Employee } from '../types';
 
 interface EmployeeManagerProps {
@@ -551,6 +551,30 @@ export const EmployeeManager: React.FC<EmployeeManagerProps> = ({
                     </td>
                     <td>
                       <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
+                        <button
+                          onClick={() => {
+                            const personalUrl = `${window.location.origin}/?employeeId=${emp.id}`;
+                            navigator.clipboard.writeText(personalUrl)
+                              .then(() => {
+                                alert(`${emp.name} さんの【専用打刻URL】をクリップボードにコピーしました！\n\n${personalUrl}\n\nこのURLを社員の方のスマホやPCに送ってブックマーク（またはホーム画面に登録）してもらってください。`);
+                              })
+                              .catch(err => {
+                                console.error('Failed to copy text: ', err);
+                                alert(`コピーに失敗しました。このURLを手動でコピーしてください:\n${personalUrl}`);
+                              });
+                          }}
+                          className="btn btn-outline"
+                          style={{ 
+                            padding: '0.4rem 0.6rem', 
+                            fontSize: '0.8rem', 
+                            gap: '0.2rem', 
+                            borderColor: 'var(--accent-green)', 
+                            color: 'var(--accent-green)' 
+                          }}
+                        >
+                          <Link size={12} />
+                          専用URLコピー
+                        </button>
                         <button
                           onClick={() => handleStartEdit(emp)}
                           className="btn btn-outline"
