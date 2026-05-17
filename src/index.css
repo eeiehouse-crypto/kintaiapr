@@ -1,0 +1,334 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap');
+
+:root {
+  /* 和モダン・工務店カラーパレット */
+  --wood-dark: #2C221E;        /* 深みのあるウォルナット */
+  --wood-medium: #8C6A5C;      /* 温かみのあるオーク */
+  --wood-light: #EFEAE4;       /* 明るい杉・ヒノキ */
+  --wood-cream: #FAF7F2;       /* 和紙を思わせる温かみのあるクリーム白 */
+  
+  --accent-green: #2D6A4F;     /* 信頼感のある安全・森林グリーン */
+  --accent-green-hover: #1B4332;
+  --accent-orange: #D97706;    /* 活気のある山吹オレンジ */
+  --accent-orange-hover: #B45309;
+  
+  --slate-dark: #1E293B;       /* スレートグレー */
+  --slate-light: #F1F5F9;
+  
+  --text-dark: #2D2522;        /* 漆黒ではなく少し茶色を帯びた優しい黒 */
+  --text-muted: #64748B;
+  --text-light: #F8FAFC;
+  
+  --border-color: rgba(140, 106, 92, 0.15);
+  
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-shadow: 0 8px 32px 0 rgba(44, 34, 30, 0.08);
+  --blur-amount: 16px;
+  
+  /* システムフォント */
+  --font-family: 'Noto Sans JP', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+  
+  /* アニメーション時間 */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ダークモード変数（管理画面や打刻画面で部分的に利用可能） */
+.dark-theme {
+  --wood-cream: #181412;
+  --wood-light: #2C221E;
+  --text-dark: #EFEAE4;
+  --text-muted: #94A3B8;
+  --glass-bg: rgba(44, 34, 30, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  --border-color: rgba(239, 234, 228, 0.1);
+}
+
+/* 基本リセット */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--wood-cream);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(239, 234, 228, 0.4) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(140, 106, 92, 0.05) 0px, transparent 50%);
+  color: var(--text-dark);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* スクロールバーのカスタマイズ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--wood-medium);
+  opacity: 0.3;
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--wood-dark);
+}
+
+/* プレミアムなガラスモルフィズムカード */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-amount));
+  -webkit-backdrop-filter: blur(var(--blur-amount));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--glass-shadow);
+  padding: 1.5rem;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.glass-card:hover {
+  border-color: rgba(140, 106, 92, 0.25);
+  box-shadow: 0 12px 40px 0 rgba(44, 34, 30, 0.12);
+}
+
+/* ボタンの共通プレミアムスタイル */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-family);
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-green) 0%, #1E4332 100%);
+  color: var(--text-light);
+  box-shadow: 0 4px 14px rgba(45, 106, 79, 0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(45, 106, 79, 0.4);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, var(--accent-orange) 0%, #B45309 100%);
+  color: var(--text-light);
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.3);
+}
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(217, 119, 6, 0.4);
+}
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--wood-medium);
+  color: var(--wood-dark);
+}
+.btn-outline:hover {
+  background: rgba(140, 106, 92, 0.1);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #EF4444 0%, #B91C1C 100%);
+  color: var(--text-light);
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3);
+}
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+}
+
+.btn:disabled {
+  background: #E2E8F0 !important;
+  color: #94A3B8 !important;
+  box-shadow: none !important;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* 入力フォームの共通スタイル */
+.form-input, .form-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family);
+  font-size: 1rem;
+  color: var(--text-dark);
+  transition: all var(--transition-fast);
+}
+
+.form-input:focus, .form-select:focus {
+  outline: none;
+  border-color: var(--wood-medium);
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(140, 106, 92, 0.15);
+}
+
+/* タイポグラフィ */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  color: var(--wood-dark);
+  line-height: 1.3;
+}
+
+/* バッジ・タグ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+}
+
+.badge-regular {
+  background-color: rgba(45, 106, 79, 0.12);
+  color: var(--accent-green);
+}
+
+.badge-part {
+  background-color: rgba(217, 119, 6, 0.12);
+  color: var(--accent-orange);
+}
+
+.badge-active {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #059669;
+}
+
+.badge-inactive {
+  background-color: rgba(100, 116, 139, 0.1);
+  color: #475569;
+}
+
+/* グリッドとレイアウト */
+.grid-container {
+  display: grid;
+  gap: 1.5rem;
+}
+
+/* テーブルスタイル */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: white;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.custom-table th {
+  background-color: var(--wood-light);
+  color: var(--wood-dark);
+  font-weight: 600;
+  padding: 1rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.custom-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-dark);
+  vertical-align: middle;
+}
+
+.custom-table tr:last-child td {
+  border-bottom: none;
+}
+
+.custom-table tr:hover td {
+  background-color: rgba(239, 234, 228, 0.2);
+}
+
+/* 印刷用スタイル（給与明細専用） */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-only {
+    display: block !important;
+  }
+  
+  .print-page-break {
+    page-break-after: always;
+  }
+  
+  .glass-card {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+  
+  /* A4 用の余白調整 */
+  @page {
+    size: A4 portrait;
+    margin: 15mm 15mm 15mm 15mm;
+  }
+}
+
+.print-only {
+  display: none;
+}
+
+/* マイクロアニメーション */
+@keyframes pulse-slow {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.03); opacity: 0.95; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.pulse-animation {
+  animation: pulse-slow 3s infinite ease-in-out;
+}
+
+.float-animation {
+  animation: float 4s infinite ease-in-out;
+}
