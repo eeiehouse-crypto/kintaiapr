@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Search, LogIn, LogOut, Coffee, CheckCircle2, Lock } from 'lucide-react';
+import { Clock, Search, LogIn, LogOut, Coffee, CheckCircle2, Lock, Eye, EyeOff } from 'lucide-react';
 import type { Employee, AttendanceLog, AttendanceStatus } from '../types';
+import { getAdminPassword } from '../utils/storage';
 
 interface ClockInScreenProps {
   employees: Employee[];
@@ -27,6 +28,24 @@ export const ClockInScreen: React.FC<ClockInScreenProps> = ({
     actionName: string;
     time: string;
   } | null>(null);
+
+  // 管理者認証モーダル用の状態
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authPassword, setAuthPassword] = useState('');
+  const [authError, setAuthError] = useState('');
+  const [showPasswordText, setShowPasswordText] = useState(false);
+
+  // 管理者認証処理
+  const handleAuthenticate = (e: React.FormEvent) => {
+    e.preventDefault();
+    const correctPassword = getAdminPassword();
+    if (authPassword === correctPassword) {
+      setShowAuthModal(false);
+      onNavigateToAdmin();
+    } else {
+      setAuthError('パスワードが正しくありません。');
+    }
+  };
 
   // 時計の更新
   useEffect(() => {
@@ -178,7 +197,12 @@ export const ClockInScreen: React.FC<ClockInScreenProps> = ({
 
         {/* 管理画面ログインボタン */}
         <button 
-          onClick={onNavigateToAdmin} 
+          onClick={() => {
+            setAuthPassword('');
+            setAuthError('');
+            setShowPasswordText(false);
+            setShowAuthModal(true);
+          }} 
           className="btn btn-outline"
           style={{ padding: '0.5rem 1rem', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
         >
@@ -580,6 +604,118 @@ export const ClockInScreen: React.FC<ClockInScreenProps> = ({
               </p>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* 管理者パスワード認証モーダル */}
+      {showAuthModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'rgba(44, 34, 30, 0.6)',
+          backdropFilter: 'blur(6px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 10000,
+        }}>
+          <form onSubmit={handleAuthenticate} className="glass-card float-animation" style={{
+            background: 'white',
+            borderRadius: 'var(--radius-lg)',
+            padding: '2.5rem',
+            maxWidth: '400px',
+            width: '90%',
+            boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
+            border: '2px solid var(--wood-medium)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1.25rem'
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', textAlign: 'center' }}>
+              <div style={{
+                width: '60px',
+                height: '60px',
+                borderRadius: '50%',
+                background: 'rgba(140, 106, 92, 0.08)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'var(--wood-medium)',
+                marginBottom: '0.25rem'
+              }}>
+                <Lock size={30} />
+              </div>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--wood-dark)' }}>管理者認証</h2>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                管理者画面に入るにはパスワードが必要です。
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <label style={{ fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--text-dark)' }}>
+                パスワード
+              </label>
+              <div style={{ position: 'relative' }}>
+                <input
+                  type={showPasswordText ? 'text' : 'password'}
+                  placeholder="パスワードを入力..."
+                  className="form-input"
+                  value={authPassword}
+                  onChange={(e) => {
+                    setAuthPassword(e.target.value);
+                    setAuthError('');
+                  }}
+                  autoFocus
+                  style={{ paddingRight: '2.5rem', width: '100%', boxSizing: 'border-box' }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPasswordText(!showPasswordText)}
+                  style={{
+                    position: 'absolute',
+                    right: '10px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    color: 'var(--text-muted)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: 0
+                  }}
+                >
+                  {showPasswordText ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+              {authError && (
+                <span style={{ color: '#EF4444', fontSize: '0.8rem', fontWeight: '500' }}>
+                  {authError}
+                </span>
+              )}
+            </div>
+
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
+              <button
+                type="button"
+                onClick={() => setShowAuthModal(false)}
+                className="btn btn-outline"
+                style={{ flex: 1 }}
+              >
+                キャンセル
+              </button>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                style={{ flex: 1 }}
+              >
+                認証する
+              </button>
+            </div>
+          </form>
         </div>
       )}
     </div>

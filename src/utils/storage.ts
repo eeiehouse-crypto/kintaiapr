@@ -3,6 +3,7 @@ import type { Employee, AttendanceLog, SystemData } from '../types';
 const STORAGE_KEYS = {
   EMPLOYEES: 'kintai_employees',
   ATTENDANCE_LOGS: 'kintai_attendance_logs',
+  ADMIN_PASSWORD: 'kintai_admin_password',
 };
 
 // 従業員データの取得
@@ -70,8 +71,19 @@ export const importSystemData = (jsonData: string): boolean => {
   }
 };
 
+// 管理者パスワードの取得 (デフォルト: 'admin')
+export const getAdminPassword = (): string => {
+  return localStorage.getItem(STORAGE_KEYS.ADMIN_PASSWORD) || 'admin';
+};
+
+// 管理者パスワードの保存
+export const saveAdminPassword = (password: string): void => {
+  localStorage.setItem(STORAGE_KEYS.ADMIN_PASSWORD, password);
+};
+
 // データのクリア
 export const clearAllData = (): void => {
   localStorage.removeItem(STORAGE_KEYS.EMPLOYEES);
   localStorage.removeItem(STORAGE_KEYS.ATTENDANCE_LOGS);
+  localStorage.removeItem(STORAGE_KEYS.ADMIN_PASSWORD);
 };

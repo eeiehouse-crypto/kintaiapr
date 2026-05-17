@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import type { Employee, AttendanceLog } from '../types';
 import { setupDemoData, DEMO_EMPLOYEES, generateDemoAttendanceLogs } from '../utils/demoData';
-import { clearAllData, exportSystemData, importSystemData } from '../utils/storage';
+import { clearAllData, exportSystemData, importSystemData, saveAdminPassword } from '../utils/storage';
 import { DashboardHome } from './DashboardHome';
 import { EmployeeManager } from './EmployeeManager';
 import { AttendanceEditor } from './AttendanceEditor';
@@ -39,6 +39,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [activeTab, setActiveTab] = useState<TabType>('home');
   const [showDatabaseModal, setShowDatabaseModal] = useState(false);
   const [dbMessage, setDbMessage] = useState<string | null>(null);
+  const [newPassword, setNewPassword] = useState('');
+
+  // パスワード変更処理
+  const handleChangePassword = () => {
+    if (!newPassword.trim()) {
+      alert('新しいパスワードを入力してください。');
+      return;
+    }
+    saveAdminPassword(newPassword.trim());
+    setNewPassword('');
+    setDbMessage('管理者パスワードを新しく更新しました！');
+    setTimeout(() => setDbMessage(null), 3000);
+  };
 
   // デモデータの生成処理
   const handleGenerateDemoData = () => {
@@ -407,6 +420,29 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     JSONインポート
                     <input type="file" accept=".json" onChange={handleImportData} style={{ display: 'none' }} />
                   </label>
+                </div>
+              </div>
+
+              {/* パスワード変更 */}
+              <div style={{ paddingBottom: '1rem', borderBottom: '1px solid var(--border-color)' }}>
+                <h3 style={{ fontSize: '1rem', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                  🔑 管理者パスワードの変更
+                </h3>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '0.75rem' }}>
+                  管理者画面に入るための認証パスワードを新しく設定します。
+                </p>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <input
+                    type="password"
+                    placeholder="新しいパスワードを入力..."
+                    className="form-input"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    style={{ fontSize: '0.85rem', flex: 1 }}
+                  />
+                  <button onClick={handleChangePassword} className="btn btn-primary" style={{ fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
+                    変更する
+                  </button>
                 </div>
               </div>
 
