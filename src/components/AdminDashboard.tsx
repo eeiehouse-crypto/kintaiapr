@@ -155,9 +155,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               color: 'white',
               fontWeight: 'bold',
               fontSize: '1.2rem'
-            }}>工</div>
+            }}>ア</div>
             <div>
-              <h2 style={{ fontSize: '1rem', color: 'white', fontWeight: 900 }}>和工務店</h2>
+              <h2 style={{ fontSize: '1rem', color: 'white', fontWeight: 900 }}>株式会社アンドデザインラボ</h2>
               <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>管理者システム v1.0</span>
             </div>
           </div>

@@ -276,7 +276,7 @@ export const PayrollCalculator: React.FC<PayrollCalculatorProps> = ({
                   <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{selectedYear}年 {selectedMonth}月度</span>
                 </div>
                 <div style={{ textAlign: 'right', fontSize: '0.9rem' }}>
-                  <strong style={{ fontSize: '1.1rem', display: 'block' }}>和工務店</strong>
+                  <strong style={{ fontSize: '1.1rem', display: 'block' }}>株式会社アンドデザインラボ</strong>
                   <span>〒000-0000 〇〇県〇〇市1-2-3</span><br />
                   <span>TEL: 00-0000-0000</span>
                 </div>
@@ -490,7 +490,7 @@ export const PayrollCalculator: React.FC<PayrollCalculatorProps> = ({
                 <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>{selectedYear}年 {selectedMonth}月度</span>
               </div>
               <div style={{ textAlign: 'right', fontSize: '0.9rem' }}>
-                <strong style={{ fontSize: '1.2rem', display: 'block' }}>和工務店</strong>
+                <strong style={{ fontSize: '1.2rem', display: 'block' }}>株式会社アンドデザインラボ</strong>
                 <span>〒000-0000 〇〇県〇〇市1-2-3</span><br />
                 <span>TEL: 00-0000-0000</span>
               </div>

@@ -1,186 +1,347 @@
 import type { Employee, AttendanceLog } from '../types';
 
-// ひらがな五十音順で綺麗に並ぶ模擬従業員10名
 export const DEMO_EMPLOYEES: Employee[] = [
   {
     id: 'emp_1',
-    name: '鈴木 茂',
-    kana: 'すずき しげる',
+    name: '岩室　遥斗',
+    kana: 'いわむろ　はると',
     type: 'regular',
-    hourlyWage: 280000, // 月給
-    transitAllowance: 15000, // 交通費(月額)
-    allowance: 20000, // 手当(月額)
+    hourlyWage: 350000,
+    transitAllowance: 0,
+    allowance: 40000,
     customAllowances: [
-      { name: '資格手当', amount: 10000 },
-      { name: '役職手当', amount: 10000 },
+      { name: '役職手当', amount: 20000 },
+      { name: '2級建築士手当', amount: 20000 },
       { name: '', amount: 0 }
     ],
     paidLeaveMinyashiHours: 8,
-    annualPaidLeaveDays: 12,
-    joinDate: '2020-04-01',
+    annualPaidLeaveDays: 10,
+    joinDate: '2024-04-01',
     isActive: true,
   },
   {
     id: 'emp_2',
-    name: '佐藤 健二',
-    kana: 'さとう けんじ',
+    name: '内藤　大成',
+    kana: 'ないとう　ひろなり',
     type: 'regular',
-    hourlyWage: 250000, // 月給
-    transitAllowance: 10000, // 交通費(月額)
-    allowance: 15000, // 手当(月額)
+    hourlyWage: 500000,
+    transitAllowance: 0,
+    allowance: 70000,
     customAllowances: [
-      { name: '職能手当', amount: 10000 },
-      { name: '資格手当', amount: 5000 },
+      { name: '役職手当', amount: 50000 },
+      { name: '2級建築士手当', amount: 20000 },
       { name: '', amount: 0 }
     ],
     paidLeaveMinyashiHours: 8,
     annualPaidLeaveDays: 10,
-    joinDate: '2022-09-15',
+    joinDate: '2024-04-01',
     isActive: true,
   },
   {
     id: 'emp_3',
-    name: '田中 優子',
-    kana: 'たなか ゆうこ',
-    type: 'part',
-    hourlyWage: 1200, // 時給
-    transitAllowance: 5000, // 交通費(月額)
+    name: '丹羽　喬也',
+    kana: 'にわ　たかや',
+    type: 'regular',
+    hourlyWage: 300000,
+    transitAllowance: 0,
     allowance: 0,
     customAllowances: [
       { name: '', amount: 0 },
       { name: '', amount: 0 },
       { name: '', amount: 0 }
     ],
-    paidLeaveMinyashiHours: 5,
-    annualPaidLeaveDays: 7,
-    joinDate: '2023-05-10',
+    paidLeaveMinyashiHours: 8,
+    annualPaidLeaveDays: 10,
+    joinDate: '2024-04-01',
     isActive: true,
   },
   {
     id: 'emp_4',
-    name: '渡辺 誠',
-    kana: 'わたなべ まこと',
+    name: '都地　涼楓',
+    kana: 'つじ　すずか',
     type: 'regular',
-    hourlyWage: 320000, // 月給
-    transitAllowance: 18000, // 交通費(月額)
-    allowance: 25000, // 手当(月額)
+    hourlyWage: 300000,
+    transitAllowance: 0,
+    allowance: 0,
     customAllowances: [
-      { name: '役職手当', amount: 15000 },
-      { name: '資格手当', amount: 10000 },
+      { name: '', amount: 0 },
+      { name: '', amount: 0 },
       { name: '', amount: 0 }
     ],
     paidLeaveMinyashiHours: 8,
-    annualPaidLeaveDays: 14,
-    joinDate: '2018-02-01',
+    annualPaidLeaveDays: 10,
+    joinDate: '2024-04-01',
     isActive: true,
   },
   {
     id: 'emp_5',
-    name: '伊藤 美咲',
-    kana: 'いとう みさき',
-    type: 'part',
-    hourlyWage: 1100, // 時給
-    transitAllowance: 4500, // 交通費(月額)
-    allowance: 0,
+    name: '鈴木　伸雄',
+    kana: 'すずき　のぶお',
+    type: 'regular',
+    hourlyWage: 350000,
+    transitAllowance: 0,
+    allowance: 5000,
     customAllowances: [
       { name: '', amount: 0 },
       { name: '', amount: 0 },
-      { name: '', amount: 0 }
+      { name: 'ケイタイ手当', amount: 5000 }
     ],
-    paidLeaveMinyashiHours: 4,
-    annualPaidLeaveDays: 5,
-    joinDate: '2024-03-01',
+    paidLeaveMinyashiHours: 8,
+    annualPaidLeaveDays: 10,
+    joinDate: '2024-04-01',
     isActive: true,
   },
   {
     id: 'emp_6',
-    name: '小林 竜也',
-    kana: 'こばやし たつや',
+    name: '山田　莉杏',
+    kana: 'やまだ　りあん',
     type: 'regular',
-    hourlyWage: 230000, // 月給
-    transitAllowance: 8000, // 交通費(月額)
-    allowance: 10000, // 手当(月額)
+    hourlyWage: 300000,
+    transitAllowance: 0,
+    allowance: 20000,
     customAllowances: [
-      { name: '資格手当', amount: 5000 },
-      { name: '現場手当', amount: 5000 },
+      { name: '', amount: 0 },
+      { name: '2級建築士手当', amount: 20000 },
       { name: '', amount: 0 }
     ],
     paidLeaveMinyashiHours: 8,
     annualPaidLeaveDays: 10,
-    joinDate: '2024-10-01',
+    joinDate: '2024-04-01',
     isActive: true,
   },
   {
     id: 'emp_7',
-    name: '高橋 さくら',
-    kana: 'たかはし さくら',
-    type: 'part',
-    hourlyWage: 1150, // 時給
-    transitAllowance: 6000, // 交通費(月額)
+    name: '波多野　麻子',
+    kana: 'はだの　あさこ',
+    type: 'regular',
+    hourlyWage: 350000,
+    transitAllowance: 0,
     allowance: 0,
     customAllowances: [
       { name: '', amount: 0 },
       { name: '', amount: 0 },
-      { name: '', amount: 0 }
-    ],
-    paidLeaveMinyashiHours: 6,
-    annualPaidLeaveDays: 8,
-    joinDate: '2023-11-20',
-    isActive: true,
-  },
-  {
-    id: 'emp_8',
-    name: '中村 大介',
-    kana: 'なかむら だいすけ',
-    type: 'regular',
-    hourlyWage: 260000, // 月給
-    transitAllowance: 0, // 自家用車通勤などで交通費なし
-    allowance: 15000, // 手当(月額)
-    customAllowances: [
-      { name: '職能手当', amount: 10000 },
-      { name: '資格手当', amount: 5000 },
       { name: '', amount: 0 }
     ],
     paidLeaveMinyashiHours: 8,
     annualPaidLeaveDays: 10,
-    joinDate: '2021-06-01',
+    joinDate: '2024-04-01',
+    isActive: true,
+  },
+  {
+    id: 'emp_8',
+    name: '今泉　翔太',
+    kana: 'いまいずみ　しょうた',
+    type: 'regular',
+    hourlyWage: 500000,
+    transitAllowance: 0,
+    allowance: 0,
+    customAllowances: [
+      { name: '', amount: 0 },
+      { name: '', amount: 0 },
+      { name: '', amount: 0 }
+    ],
+    paidLeaveMinyashiHours: 8,
+    annualPaidLeaveDays: 10,
+    joinDate: '2024-04-01',
     isActive: true,
   },
   {
     id: 'emp_9',
-    name: '山中 拓海',
-    kana: 'やまなか たくみ',
-    type: 'part',
-    hourlyWage: 1300, // 時給
-    transitAllowance: 5000, // 交通費(月額)
+    name: '武田　輝',
+    kana: 'たけだ　てる',
+    type: 'regular',
+    hourlyWage: 500000,
+    transitAllowance: 0,
     allowance: 0,
     customAllowances: [
       { name: '', amount: 0 },
       { name: '', amount: 0 },
       { name: '', amount: 0 }
     ],
-    paidLeaveMinyashiHours: 6,
-    annualPaidLeaveDays: 5,
-    joinDate: '2025-01-15',
+    paidLeaveMinyashiHours: 8,
+    annualPaidLeaveDays: 10,
+    joinDate: '2024-04-01',
     isActive: true,
   },
   {
     id: 'emp_10',
-    name: '加藤 まゆみ',
-    kana: 'かとう まゆみ',
-    type: 'part',
-    hourlyWage: 1100, // 時給
-    transitAllowance: 4000, // 交通費(月額)
+    name: '鈴木　輝',
+    kana: 'すずき　ひかる',
+    type: 'regular',
+    hourlyWage: 350000,
+    transitAllowance: 0,
     allowance: 0,
     customAllowances: [
       { name: '', amount: 0 },
       { name: '', amount: 0 },
       { name: '', amount: 0 }
     ],
-    paidLeaveMinyashiHours: 4,
-    annualPaidLeaveDays: 4,
-    joinDate: '2024-07-01',
-    isActive: false, // 有効ではない従業員
+    paidLeaveMinyashiHours: 8,
+    annualPaidLeaveDays: 10,
+    joinDate: '2024-04-01',
+    isActive: true,
+  },
+  {
+    id: 'emp_11',
+    name: '菰田　博斗',
+    kana: 'こもだ　はくと',
+    type: 'regular',
+    hourlyWage: 400000,
+    transitAllowance: 0,
+    allowance: 0,
+    customAllowances: [
+      { name: '', amount: 0 },
+      { name: '', amount: 0 },
+      { name: '', amount: 0 }
+    ],
+    paidLeaveMinyashiHours: 8,
+    annualPaidLeaveDays: 10,
+    joinDate: '2024-04-01',
+    isActive: true,
+  },
+  {
+    id: 'emp_12',
+    name: '塘　剛',
+    kana: 'つつみ　ごお',
+    type: 'regular',
+    hourlyWage: 600000,
+    transitAllowance: 0,
+    allowance: 0,
+    customAllowances: [
+      { name: '', amount: 0 },
+      { name: '', amount: 0 },
+      { name: '', amount: 0 }
+    ],
+    paidLeaveMinyashiHours: 8,
+    annualPaidLeaveDays: 10,
+    joinDate: '2024-04-01',
+    isActive: true,
+  },
+  {
+    id: 'emp_13',
+    name: '加藤　愛弓',
+    kana: 'かとう　あゆみ',
+    type: 'regular',
+    hourlyWage: 300000,
+    transitAllowance: 0,
+    allowance: 0,
+    customAllowances: [
+      { name: '', amount: 0 },
+      { name: '', amount: 0 },
+      { name: '', amount: 0 }
+    ],
+    paidLeaveMinyashiHours: 8,
+    annualPaidLeaveDays: 10,
+    joinDate: '2024-04-01',
+    isActive: true,
+  },
+  {
+    id: 'emp_14',
+    name: '神藤　光基',
+    kana: 'じんどう　こうき',
+    type: 'regular',
+    hourlyWage: 300000,
+    transitAllowance: 0,
+    allowance: 0,
+    customAllowances: [
+      { name: '', amount: 0 },
+      { name: '', amount: 0 },
+      { name: '', amount: 0 }
+    ],
+    paidLeaveMinyashiHours: 8,
+    annualPaidLeaveDays: 10,
+    joinDate: '2024-04-01',
+    isActive: true,
+  },
+  {
+    id: 'emp_15',
+    name: '土橋　美鈴槻',
+    kana: 'どばし　みづき',
+    type: 'regular',
+    hourlyWage: 430000,
+    transitAllowance: 0,
+    allowance: 0,
+    customAllowances: [
+      { name: '', amount: 0 },
+      { name: '', amount: 0 },
+      { name: '', amount: 0 }
+    ],
+    paidLeaveMinyashiHours: 8,
+    annualPaidLeaveDays: 10,
+    joinDate: '2024-04-01',
+    isActive: true,
+  },
+  {
+    id: 'emp_16',
+    name: '安保　寧音',
+    kana: 'あぼ　ねね',
+    type: 'regular',
+    hourlyWage: 400000,
+    transitAllowance: 0,
+    allowance: 0,
+    customAllowances: [
+      { name: '', amount: 0 },
+      { name: '', amount: 0 },
+      { name: '', amount: 0 }
+    ],
+    paidLeaveMinyashiHours: 8,
+    annualPaidLeaveDays: 10,
+    joinDate: '2024-04-01',
+    isActive: true,
+  },
+  {
+    id: 'emp_17',
+    name: '成瀬　莉子',
+    kana: 'なるせ　りこ',
+    type: 'regular',
+    hourlyWage: 400000,
+    transitAllowance: 0,
+    allowance: 0,
+    customAllowances: [
+      { name: '', amount: 0 },
+      { name: '', amount: 0 },
+      { name: '', amount: 0 }
+    ],
+    paidLeaveMinyashiHours: 8,
+    annualPaidLeaveDays: 10,
+    joinDate: '2024-04-01',
+    isActive: true,
+  },
+  {
+    id: 'emp_18',
+    name: '松井　美樹',
+    kana: 'まつい　みき',
+    type: 'regular',
+    hourlyWage: 400000,
+    transitAllowance: 0,
+    allowance: 0,
+    customAllowances: [
+      { name: '', amount: 0 },
+      { name: '', amount: 0 },
+      { name: '', amount: 0 }
+    ],
+    paidLeaveMinyashiHours: 8,
+    annualPaidLeaveDays: 10,
+    joinDate: '2024-04-01',
+    isActive: true,
+  },
+  {
+    id: 'emp_19',
+    name: '彦坂　綾音',
+    kana: 'ひこさか　あやね',
+    type: 'regular',
+    hourlyWage: 180000,
+    transitAllowance: 0,
+    allowance: 0,
+    customAllowances: [
+      { name: '', amount: 0 },
+      { name: '', amount: 0 },
+      { name: '', amount: 0 }
+    ],
+    paidLeaveMinyashiHours: 8,
+    annualPaidLeaveDays: 10,
+    joinDate: '2024-04-01',
+    isActive: true,
   }
 ];
 
