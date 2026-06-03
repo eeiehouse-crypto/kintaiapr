@@ -342,6 +342,42 @@ export const DEMO_EMPLOYEES: Employee[] = [
     annualPaidLeaveDays: 10,
     joinDate: '2024-04-01',
     isActive: true,
+  },
+  {
+    id: 'emp_20',
+    name: '西浦　武志',
+    kana: 'にしうら　たけし',
+    type: 'regular',
+    hourlyWage: 1000000,
+    transitAllowance: 0,
+    allowance: 0,
+    customAllowances: [
+      { name: '', amount: 0 },
+      { name: '', amount: 0 },
+      { name: '', amount: 0 }
+    ],
+    paidLeaveMinyashiHours: 8,
+    annualPaidLeaveDays: 10,
+    joinDate: '2024-04-01',
+    isActive: true,
+  },
+  {
+    id: 'emp_21',
+    name: '鈴木　宗人',
+    kana: 'すずき　むねひと',
+    type: 'regular',
+    hourlyWage: 830000,
+    transitAllowance: 0,
+    allowance: 0,
+    customAllowances: [
+      { name: '', amount: 0 },
+      { name: '', amount: 0 },
+      { name: '', amount: 0 }
+    ],
+    paidLeaveMinyashiHours: 8,
+    annualPaidLeaveDays: 10,
+    joinDate: '2024-04-01',
+    isActive: true,
   }
 ];
 
