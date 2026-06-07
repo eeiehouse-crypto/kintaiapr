@@ -332,7 +332,7 @@ export const ClockInScreen: React.FC<ClockInScreenProps> = ({
             }} />
             <input
               type="text"
-              placeholder="なまえ、ふりがなで検索..."
+              placeholder="なまえで検索..."
               className="form-input"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -400,13 +400,6 @@ export const ClockInScreen: React.FC<ClockInScreenProps> = ({
                       textAlign: 'center',
                       lineHeight: '1.2'
                     }}>{emp.name}</div>
-                    {/* ふりがな */}
-                    <div style={{
-                      fontSize: '0.7rem',
-                      color: 'var(--text-muted)',
-                      marginTop: '0.1rem',
-                      textAlign: 'center'
-                    }}>{emp.kana}</div>
 
                     {/* ステータスバッジ */}
                     {status === 'clocked_in' && (
@@ -455,7 +448,6 @@ export const ClockInScreen: React.FC<ClockInScreenProps> = ({
                   {selectedEmployee.type === 'regular' ? '正社員' : 'パート・アルバイト'}
                 </span>
                 <h2 style={{ fontSize: '1.8rem', fontWeight: 900, marginBottom: '0.2rem' }}>{selectedEmployee.name} さん</h2>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>{selectedEmployee.kana}</p>
               </div>
 
               {/* 今日の打刻ステータスサマリー */}
@@ -480,18 +472,6 @@ export const ClockInScreen: React.FC<ClockInScreenProps> = ({
                     <span style={{ color: 'var(--text-muted)' }}>退勤</span>
                     <strong style={{ color: todayLog?.clockOut ? 'var(--accent-green)' : '#94A3B8' }}>
                       {todayLog?.clockOut || '--:--'}
-                    </strong>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.25rem 0.5rem', background: '#fff', borderRadius: '4px' }}>
-                    <span style={{ color: 'var(--text-muted)' }}>休憩入</span>
-                    <strong style={{ color: todayLog?.breakStart ? 'var(--accent-orange)' : '#94A3B8' }}>
-                      {todayLog?.breakStart || '--:--'}
-                    </strong>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.25rem 0.5rem', background: '#fff', borderRadius: '4px' }}>
-                    <span style={{ color: 'var(--text-muted)' }}>休憩戻</span>
-                    <strong style={{ color: todayLog?.breakEnd ? 'var(--accent-orange)' : '#94A3B8' }}>
-                      {todayLog?.breakEnd || '--:--'}
                     </strong>
                   </div>
                 </div>
@@ -539,44 +519,6 @@ export const ClockInScreen: React.FC<ClockInScreenProps> = ({
                 >
                   <LogOut size={28} />
                   退勤
-                </button>
-
-                {/* 休憩開始ボタン */}
-                <button
-                  onClick={() => handleStamp('break_start')}
-                  disabled={currentStatus !== 'clocked_in'}
-                  className="btn btn-outline"
-                  style={{
-                    height: '90px',
-                    flexDirection: 'column',
-                    fontSize: '1.1rem',
-                    borderColor: 'var(--accent-orange)',
-                    color: 'var(--accent-orange)',
-                    background: 'white',
-                    borderRadius: 'var(--radius-md)'
-                  }}
-                >
-                  <Coffee size={24} />
-                  休憩入り
-                </button>
-
-                {/* 休憩終了ボタン */}
-                <button
-                  onClick={() => handleStamp('break_end')}
-                  disabled={currentStatus !== 'on_break'}
-                  className="btn btn-outline"
-                  style={{
-                    height: '90px',
-                    flexDirection: 'column',
-                    fontSize: '1.1rem',
-                    borderColor: 'var(--accent-green)',
-                    color: 'var(--accent-green)',
-                    background: 'white',
-                    borderRadius: 'var(--radius-md)'
-                  }}
-                >
-                  <Clock size={24} />
-                  休憩戻り
                 </button>
               </div>
 

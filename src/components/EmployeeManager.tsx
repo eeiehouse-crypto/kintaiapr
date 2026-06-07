@@ -499,7 +499,6 @@ export const EmployeeManager: React.FC<EmployeeManagerProps> = ({
                   <tr key={emp.id} style={{ opacity: emp.isActive ? 1 : 0.6 }}>
                     <td>
                       <div style={{ fontWeight: 'bold' }}>{emp.name}</div>
-                      <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{emp.kana}</div>
                     </td>
                     <td>
                       <span className={`badge ${emp.type === 'regular' ? 'badge-regular' : 'badge-part'}`}>
