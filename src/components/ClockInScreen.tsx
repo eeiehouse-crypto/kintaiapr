@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Search, LogIn, LogOut, Coffee, CheckCircle2, Lock, Eye, EyeOff } from 'lucide-react';
+import { Clock, Search, LogIn, LogOut, CheckCircle2, Lock, Eye, EyeOff } from 'lucide-react';
 import type { Employee, AttendanceLog, AttendanceStatus } from '../types';
 import { getAdminPassword } from '../utils/storage';
 
