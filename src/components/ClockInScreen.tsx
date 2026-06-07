@@ -435,7 +435,7 @@ export const ClockInScreen: React.FC<ClockInScreenProps> = ({
           background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(250, 247, 242, 0.75) 100%)'
         }}>
           {selectedEmployee ? (
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'center', gap: '1.5rem' }}>
               
               {/* 選択された従業員のプロフィール */}
               <div style={{ textAlign: 'center', padding: '1rem 0' }}>
